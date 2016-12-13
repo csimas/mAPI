@@ -19,6 +19,10 @@
 #results{
 
 }
+.badge {
+	float: right;
+}
+
 .result{
 	font-family: Arial;
 	color:white;

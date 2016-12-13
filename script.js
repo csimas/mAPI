@@ -238,14 +238,24 @@ function callback(results, status) {
         }, function(place, status) {
           if (status === google.maps.places.PlacesServiceStatus.OK) {
               	if(place.reviews != null){  //checks to see if place has review
-              		document.getElementById('results').innerHTML+=
-		              		'<div><strong>' + place.name + '</strong><br>' + 'Place ID: ' + place.place_id + '<br>' + place.formatted_address + '</div>'; //dumby text
-	              	for(var j =0,review;review=place.reviews[j];j++){
-	              		if(review.text.search("catcall")>-1){ //checks for strings (here just checking for placeholder searchstr 'rooms')
-	              			document.getElementById('results').innerHTML+=
-		              		'<div>' + place.reviews[j].text + '</div>'; //dumby text
+					var count = 0;
+              		// document.getElementById('results').innerHTML+=
+		              // 		'<div><strong>' + place.name + '</strong><br>' + 'Place ID: ' + place.place_id + '<br>' + place.formatted_address + '</div>'; //dumby text
+	              	for(var j=0,review;review=place.reviews[j];j++){
+
+	              		if(review.text.search("rude")>-1){ //checks for strings (here just checking for placeholder searchstr 'rude')
+	              			// document.getElementById('results').innerHTML+=
+		              		// '<div>' + place.reviews[j].text + '</div>'; //dumby text
+							count++;
+							console.log('here');
 	              		}
+
 	              	}
+	              	if (count > 0) {
+						var res = "<strong>"+place.name+"</strong>"+"<br>"+place.formatted_address;
+						var count_badge = "<span class='badge'>"+count+"</span>";
+						$("#results").append("<tr><td>"+res+count_badge+"</td></tr>");
+					}
 	            }	
 		              	
           }
