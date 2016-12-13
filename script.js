@@ -128,7 +128,7 @@ function initStore() {
 
 function filterSearch() {
 	deleteMarkers();
-	$("#results td").empty();
+	$("#results tr").empty();
 
 	performSearch();
 }
