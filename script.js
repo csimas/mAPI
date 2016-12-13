@@ -80,6 +80,9 @@ function initMap() {
 
 function performSearch() {
 	var search = $( "#search" ).val();
+	store.set('user',search)
+	init() 
+
 	var filters = $('input:checkbox[name=type]:checked').map(function(_, el) {return $(el).val();}).get();
 
 	if (filters.length > 0) {
@@ -113,6 +116,15 @@ function performSearch() {
 		service.radarSearch(request, callback);
 	}
 }
+
+function init() {
+    if (!store.enabled) {
+        alert('Local storage is not supported by your browser. Please disable "Private Mode", or upgrade to a modern browser.')
+        return
+    }
+	store.forEach(function(key, val) {
+    	$("#searchHistory").append("<tr><td>"+val+"</td></tr>");
+})}
 
 function filterSearch() {
 	deleteMarkers();
