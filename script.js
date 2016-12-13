@@ -51,14 +51,24 @@ function initMap() {
 
 function performSearch() {
 	var search = $( "#search" ).val();
-	var types = ['restaurant','bar','store','bank','local_government_office'];
-	for (t in types) {
+
+	if ($('input:radio[name=type]:checked') != null) {
 		var request = {
 			bounds: map.getBounds(),
 			keyword: search,
-			type: types[t]
+			type: $('input:radio[name=type]:checked').val()
 		};
 		service.radarSearch(request, callback);
+	} else {
+		var types = ['restaurant','bar','store','bank','local_government_office'];
+		for (t in types) {
+			var request = {
+				bounds: map.getBounds(),
+				keyword: search,
+				type: types[t]
+			};
+			service.radarSearch(request, callback);
+		}
 	}
 
 
@@ -72,6 +82,7 @@ function filterSearch() {
 		keyword: search,
 		type: $('input:radio[name=type]:checked').val()
 	};
+
 	console.log(request.type);
 	service.radarSearch(request, callback);
 }
@@ -115,7 +126,7 @@ function callback(results, status) {
         });
 
 
-        //
+        //all green
 		if (count == 0) {
 			addMarkerGreen(result);
 		} else {
