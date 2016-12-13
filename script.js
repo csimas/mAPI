@@ -92,6 +92,7 @@ function performSearch() {
 			};
 			service.radarSearch(request, callback);
 		}
+
 	} else {
 		// var types = document.getElementsByName("type");
 		// console.log(types);
