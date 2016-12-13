@@ -46,7 +46,7 @@ function initMap() {
 	});
 	infoWindow = new google.maps.InfoWindow();
 	service = new google.maps.places.PlacesService(map);
-	map.addListener('idle', performSearch);
+	//map.addListener('idle', performSearch);
 }
 
 function performSearch() {
