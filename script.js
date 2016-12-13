@@ -109,7 +109,7 @@ function filterSearch() {
 	var request = {
 		bounds: map.getBounds(),
 		keyword: search,
-		type: $('input:radio[name=type]:checked').val()
+		type: $('input:checkbox[name=type]:checked').val()
 	};
 
 	console.log(request.type);
