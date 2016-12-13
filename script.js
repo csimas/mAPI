@@ -61,7 +61,7 @@ var latitude=40.730
 var longitude=-74.006
 
 function initMap() {
-	map = new google.maps.Map(document.getElementById('right'), {
+	map = new google.maps.Map(document.getElementById('map'), {
 		  center: {lat: latitude, lng: longitude},
 		  zoom: 13,
 		  styles: [{
