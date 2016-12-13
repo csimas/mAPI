@@ -108,17 +108,21 @@ function filterSearch() {
 	deleteMarkers();
 	var search = $( "#search" ).val();
 	$("#results td").empty();
-	var request = {
-		bounds: map.getBounds(),
-		keyword: search,
-		type: $('input:checkbox[name=type]:checked').val()
-		// $('input:checkbox[name=hate]:checked').map(function(_, el) {
-  //   	return $(el).val();
-  //   }).get()
-	};
+	$('input:checkbox[name=type]:checked').each(function() {
+		var request = {
+			bounds: map.getBounds(),
+			keyword: search,
+			type: $(this).val()
+			// $('input:checkbox[name=hate]:checked').map(function(_, el) {
+			//   	return $(el).val();
+			//   }).get()
+		};
+		console.log(request.type);
+		service.radarSearch(request, callback);
+	});
 
-	console.log(request.type);
-	service.radarSearch(request, callback);
+
+
 }
 
 function filterHate() {
