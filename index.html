@@ -5,12 +5,23 @@
 		<title>HateSpotting</title>
 		<script type="text/javascript" src="jquery-1.7.2.min.js"></script>
 		<script type="text/javascript" src="script.js"></script>
-
+		<link href = "//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" rel = "stylesheet">
 
 	</head>
 
 <body>
-	<div id="search"></div>
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12" id="search">
+			<div class="input-group" >
+				<input type="text" class="form-control" placeholder="Search by address"/>
+				<div class="input-group-btn">
+					<button type="button" class="btn btn-default"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+				</div>
+				</div>
+			</div>
+		</div>
+	</div>
 	<div id="right"></div>
 	<div id="left"></div>
 	<ul id="results"></ul>
