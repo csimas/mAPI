@@ -199,6 +199,24 @@ function callback(results, status) {
 	}
 }
 
+$(function() {
+
+$('#clickMe').click(function(event) {
+    var mytext = $('#myText').val();
+
+    $('<div id="dialog">'+mytext+'</div>').appendTo('body');        
+    event.preventDefault();
+
+        $("#dialog").dialog({                   
+            width: 600,
+            modal: true,
+            close: function(event, ui) {
+                $("#dialog").hide();
+                }
+            });
+    }); //close click
+});
+
 function addMarkerRed(place) {
 	var marker = new google.maps.Marker({
 	  map: map,
