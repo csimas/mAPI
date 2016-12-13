@@ -7,12 +7,24 @@
 		<!-- from https://github.com/kristopolous/Porter-Stemmer -->
 		<script type="text/javascript" src="PorterStemmer1980.min.js"></script>
 		<script type="text/javascript" src="script.js"></script>
-
+		<link href = "//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" rel = "stylesheet">
 
 	</head>
 
 <body>
-	<div id="search"></div>
+	<div class="container">
+		<div class="row">
+			<br>
+			<div class="col-md-12" >
+			<div class="input-group" >
+				<input id="search" type="text" class="form-control" placeholder="Search"/>
+				<div class="input-group-btn" >
+					<button onclick="performSearch()" type="button" class="btn btn-default"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+				</div>
+				</div>
+			</div>
+		</div>
+	</div>
 	<div id="right"></div>
 	<div id="left"></div>
 	<ul id="results"></ul>

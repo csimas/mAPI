@@ -214,9 +214,10 @@ function initMap() {
 }
 
 function performSearch() {
+	var search = $( "#search" ).val();
 	var request = {
 		  bounds: map.getBounds(),
-		  keyword: 'catcall'
+		  keyword: search
 	};
 	service.radarSearch(request, callback);
 }
