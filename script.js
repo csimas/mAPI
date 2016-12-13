@@ -52,7 +52,9 @@ function initMap() {
 function performSearch() {
 	var search = $( "#search" ).val();
 
-	if ($('input:radio[name=type]:checked') != null) {
+	if ($('input:radio[name=type]:checked').val() != null) {
+		console.log('here');
+
 		var request = {
 			bounds: map.getBounds(),
 			keyword: search,
@@ -77,6 +79,8 @@ function performSearch() {
 function filterSearch() {
 	service = new google.maps.places.PlacesService(map);
 	var search = $( "#search" ).val();
+	$("#results td").empty();
+	$()
 	var request = {
 		bounds: map.getBounds(),
 		keyword: search,
