@@ -19,7 +19,6 @@
 
     <!-- Font Awesome icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
   </head>
 
   <body>
@@ -69,28 +68,28 @@
                 <div id="discrim" class="panel-collapse collapse in">
                   <div class="panel-body">
                     <div class="checkbox">
-                      <label><input type="checkbox" name="type" value="race" onclick="filterHate()">Race</label>
+                      <label><input type="checkbox" name="hate" value="race" onclick="filterHate()">Race</label>
                     </div>
                     <div class="checkbox">
-                      <label><input type="checkbox" name="type" value="gender" onclick="filterHate()">Gender</label>
+                      <label><input type="checkbox" name="hate" value="gender" onclick="filterHate()">Gender</label>
                     </div>
                     <div class="checkbox">
-                      <label><input type="checkbox" name="type" value="LGBTQ" onclick="filterHate()">LGBTQ</label>
+                      <label><input type="checkbox" name="hate" value="LGBTQ" onclick="filterHate()">LGBTQ</label>
                     </div>
                     <div class="checkbox">
-                      <label><input type="checkbox" name="type" value="religion" onclick="filterHate()">Religion</label>
+                      <label><input type="checkbox" name="hate" value="religion" onclick="filterHate()">Religion</label>
                     </div>
                     <div class="checkbox">
-                      <label><input type="checkbox" name="type" value="disability" onclick="filterHate()">Disability</label>
+                      <label><input type="checkbox" name="hate" value="disability" onclick="filterHate()">Disability</label>
                     </div>
                     <div class="checkbox">
-                      <label><input type="checkbox" name="type" value="immigration status" onclick="filterHate()">Immigration Status</label>
+                      <label><input type="checkbox" name="hate" value="immigration status" onclick="filterHate()">Immigration Status</label>
                     </div>
                     <div class="checkbox">
-                      <label><input type="checkbox" name="type" value="violence" onclick="filterHate()">Violence</label>
+                      <label><input type="checkbox" name="hate" value="violence" onclick="filterHate()">Violence</label>
                     </div>
                     <div class="checkbox">
-                      <label><input type="checkbox" name="type" value="hate speech" onclick="filterHate()">Hate Speech</label>
+                      <label><input type="checkbox" name="hate" value="hate speech" onclick="filterHate()">Hate Speech</label>
                     </div>
                   </div>
                 </div>
@@ -249,10 +248,11 @@
     <!-- from https://github.com/kristopolous/Porter-Stemmer -->
     <script type="text/javascript" src="PorterStemmer1980.min.js"></script>
     <script type="text/javascript" src="script.js"></script>
+    <script type="text/javascript" src="dictionary.js"></script>
 
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     
     <!-- for some reason this is taking forever to load -->
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB-1rvJ0IZDsc3px7JLvD1sDFegdEGoBR8&callback=initMap&libraries=places,visualization" async defer></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBCywZcpFv9HS4sDdBKZ2gPeLObR4pKOJ4&callback=initMap&libraries=places,visualization" async defer></script>
   </body>
 </html>
