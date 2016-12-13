@@ -183,7 +183,7 @@ function callback(results, status) {
 	              	if (count > 0) {
 						var res = "<strong>"+place.name+"</strong>"+"<br>"+place.formatted_address;
 						var count_badge = "<span class='badge'>"+count+"</span>";
-						$("#results").append("<tr><td>"+res+count_badge+"</td></tr>");
+						$("#results").append("<tr onclick=\"input\" data-toggle=\"modal\" href=\"#reviews\"><td>"+res+count_badge+"</td></tr>");
 
 					}
 	            }
