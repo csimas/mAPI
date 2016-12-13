@@ -81,16 +81,6 @@ function initMap() {
 function performSearch() {
 	var search = $( "#search" ).val();
 
-	if ($('input:radio[name=type]:checked').val() != null) {
-		console.log('here');
-
-		var request = {
-			bounds: map.getBounds(),
-			keyword: search,
-			type: $('input:radio[name=type]:checked').val()
-		};
-		service.radarSearch(request, callback);
-	} else {
 		var types = ['restaurant','bar','store','bank','local_government_office'];
 		for (t in types) {
 			var request = {
@@ -100,7 +90,7 @@ function performSearch() {
 			};
 			service.radarSearch(request, callback);
 		}
-	}
+
 
 }
 
