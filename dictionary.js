@@ -68,6 +68,7 @@ var dictionary_json = {
 		"bitch",
 		"breastfeed",
 		"catcall",
+		"creep",
 		"grope",
 		"mansplain",
 		"misogyn",
@@ -155,6 +156,7 @@ var dictionary_json = {
 		"discrimin",
 		"harass",
 		"hate crime",
+		"insult",
 		"prejudic",
 		"rude"
 	]

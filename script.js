@@ -28,6 +28,7 @@ function containsHateSpecific(review, filter) {
 	// console.log(stem_arr);
 	for (var i in document.dictionary[filter]){
 		if(review_arr.indexOf(document.dictionary[filter][i]) > -1 || stem_arr.indexOf(document.dictionary[filter][i]) > -1) {
+			console.log(document.dictionary[filter][i]);
 			return true;
 		}
 	}
@@ -45,6 +46,7 @@ function containsHateGeneral(review) {
 	for (var filter in document.dictionary) {
 		for (var i in document.dictionary[filter]){
 			if(review_arr.indexOf(document.dictionary[filter][i]) > -1 || stem_arr.indexOf(document.dictionary[filter][i]) > -1) {
+				console.log(document.dictionary[filter][i]);
 				return true;
 			}
 		}
@@ -131,7 +133,8 @@ function callback(results, status) {
 	  console.error(status);
 	  return;
 	}
-	var hate_filters = [];
+	var hate_filters = $('input:checkbox[name=hate]:checked').map(function(_, el) {return $(el).val();}).get();
+	// console.log(hate_filters);
 	for (var i = 0, result; result = results[i]; i++) {
 	 // 	var service = new google.maps.places.PlacesService(map);
 		count = 0;
@@ -145,20 +148,29 @@ function callback(results, status) {
 		              // 		'<div><strong>' + place.name + '</strong><br>' + 'Place ID: ' + place.place_id + '<br>' + place.formatted_address + '</div>'; //dumby text
 	              	for (var j = 0, review; review = place.reviews[j]; j++){
 	              		// console.log(review.text);
-	              		// if($('input:checkbox[name=hate]:checked').val() == null) {
-	              		// 	if (containsHateGeneral(review.text)) {
-	              		// 		console.log(review.text);
-	              		// 	}
-	              		// }
-	              		// else {
-	              		// 	if (containsHateSpecific(review.text, $('input:checkbox[name=hate]:checked').val())) {}
-	              		// }
-
-	              		if(review.text.search("rude")>-1){ //checks for strings (here just checking for placeholder searchstr 'rude')
-	              			// document.getElementById('results').innerHTML+=
-		              		// '<div>' + place.reviews[j].text + '</div>'; //dumby text
-							count++;
+	              		if (hate_filters.length == 0) {
+	              			// console.log("in if");
+	              			if (containsHateGeneral(review.text)) {
+	              				console.log(review.text);
+	              				count++;
+	              			}
 	              		}
+	              		else {
+	              			// console.log("in else");
+	              			for (var i in hate_filters) {
+	              				if (containsHateSpecific(review.text, hate_filters[i])) {
+	              					console.log(hate_filters[i]);
+	              					console.log(review.text);
+	              					count++;
+	              				}
+	              			}
+	              		}
+
+	      //         		if(review.text.search("rude")>-1){ //checks for strings (here just checking for placeholder searchstr 'rude')
+	      //         			// document.getElementById('results').innerHTML+=
+		     //          		// '<div>' + place.reviews[j].text + '</div>'; //dumby text
+							// count++;
+	      //         		}
 	              	}
 	              	if (count > 0) {
 						var res = "<strong>"+place.name+"</strong>"+"<br>"+place.formatted_address;
@@ -175,11 +187,6 @@ function callback(results, status) {
           	}
         });
 	}
-	// if ($('input:checkbox[name=hate]:checked').val() == null) {
-	console.log($('input:checkbox[name=hate]:checked').map(function(_, el) {
-    	return $(el).val();
-    }).get())
-	// }
 }
 
 function addMarkerRed(place) {
