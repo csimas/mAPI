@@ -2,10 +2,11 @@
 	margin: 15px;
 }
 
-#left{
+#filters{
 	font-family: Arial;
 	color:lightgrey;
 	text-align:center;
+	height:600px;
 }
 #right{
 	font-family: Arial;
@@ -13,18 +14,10 @@
 	text-align:center;
 	height:600px;
 
+
 }
 #results{
-	font-family: Arial;
-	color:lightgrey;
-	font-size: 16px;
-	text-align:center;
-	height:600px;
-	width:750px;
-	margin:5px;
-	background-color:grey;
-	float:top;
-	float:left;
+
 }
 .result{
 	font-family: Arial;
