@@ -80,6 +80,8 @@ function initMap() {
 
 function performSearch() {
 	var search = $( "#search" ).val();
+	deleteMarkers();
+	$("#results tr").empty();
 
 	store.set('user',search);
 	initStore(); 
