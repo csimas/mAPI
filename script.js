@@ -215,14 +215,21 @@ function initMap() {
 
 function performSearch() {
 	var search = $( "#search" ).val();
-	var request = {
-		  bounds: map.getBounds(),
-		  keyword: search
-	};
-	service.radarSearch(request, callback);
+	var types = ['restaurant','bar','store','bank','local_government_office'];
+	for (t in types) {
+		var request = {
+			bounds: map.getBounds(),
+			keyword: search,
+			type: types[t]
+		};
+		service.radarSearch(request, callback);
+	}
+
+
 }
 
 function filterSearch() {
+	service = new google.maps.places.PlacesService(map);
 	var search = $( "#search" ).val();
 	var request = {
 		bounds: map.getBounds(),
