@@ -80,28 +80,37 @@ function initMap() {
 
 function performSearch() {
 	var search = $( "#search" ).val();
+	var filters = $('input:checkbox[name=type]:checked').map(function(_, el) {return $(el).val();}).get();
 
-	if ($('input:radio[name=type]:checked').val() != null) {
+	if (filters.length > 0) {
 		console.log('here');
-
-		var request = {
-			bounds: map.getBounds(),
-			keyword: search,
-			type: $('input:radio[name=type]:checked').val()
-		};
-		service.radarSearch(request, callback);
-	} else {
-		var types = ['restaurant','bar','store','bank','local_government_office'];
-		for (t in types) {
+		for(var i in filters) {
 			var request = {
 				bounds: map.getBounds(),
 				keyword: search,
-				type: types[t]
+				type: filters[i]
 			};
 			service.radarSearch(request, callback);
 		}
+	} else {
+		// var types = document.getElementsByName("type");
+		// console.log(types);
+		// var types = ['restaurant','bar','store','bank','local_government_office'];
+		// for (t in types) {
+		// 	console.log(types[t]["value"]);
+		// 	var request = {
+		// 		bounds: map.getBounds(),
+		// 		keyword: search,
+		// 		type: types[t]["value"]
+		// 	};
+		// 	service.radarSearch(request, callback);
+		// }
+		var request = {
+			bounds: map.getBounds(),
+			keyword: search
+		};
+		service.radarSearch(request, callback);
 	}
-
 }
 
 function filterSearch() {
