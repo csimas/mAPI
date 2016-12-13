@@ -30,6 +30,7 @@ function containsHate(review, filter) {
 var map;
 var infoWindow;
 var service;
+var markers = [];
 var latitude=40.730
 var longitude=-74.006
 
@@ -73,14 +74,12 @@ function performSearch() {
 		}
 	}
 
-
 }
 
 function filterSearch() {
-	service = new google.maps.places.PlacesService(map);
+	deleteMarkers();
 	var search = $( "#search" ).val();
 	$("#results td").empty();
-	$()
 	var request = {
 		bounds: map.getBounds(),
 		keyword: search,
@@ -122,6 +121,7 @@ function callback(results, status) {
 						var res = "<strong>"+place.name+"</strong>"+"<br>"+place.formatted_address;
 						var count_badge = "<span class='badge'>"+count+"</span>";
 						$("#results").append("<tr><td>"+res+count_badge+"</td></tr>");
+
 					}
 	            }
 		              	
@@ -150,6 +150,7 @@ function addMarkerRed(place) {
 	    scaledSize: new google.maps.Size(10, 17)
 	  }
 	});
+	markers.push(marker);
 
 	google.maps.event.addListener(marker, 'click', function() {
 	  service.getDetails(place, function(result, status) {
@@ -173,6 +174,7 @@ function addMarkerGreen(place) {
 			scaledSize: new google.maps.Size(10, 17)
 		}
 	});
+	markers.push(marker);
 
 	google.maps.event.addListener(marker, 'click', function() {
 		service.getDetails(place, function(result, status) {
@@ -184,4 +186,14 @@ function addMarkerGreen(place) {
 			infoWindow.open(map, marker);
 		});
 	});
+}
+
+function deleteMarkers() {
+	setMapOnAll(null);
+	markers = [];
+}
+function setMapOnAll(map) {
+	for (var i = 0; i < markers.length; i++) {
+		markers[i].setMap(map);
+	}
 }
