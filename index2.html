@@ -68,28 +68,28 @@
                 <div id="discrim" class="panel-collapse collapse in">
                   <div class="panel-body">
                     <div class="checkbox">
-                      <label><input type="checkbox" name="hate" value="race" onclick="filterHate()">Race</label>
+                      <label><input type="checkbox" name="hate" value="race" onclick="filterSearch()">Race</label>
                     </div>
                     <div class="checkbox">
-                      <label><input type="checkbox" name="hate" value="gender" onclick="filterHate()">Gender</label>
+                      <label><input type="checkbox" name="hate" value="gender" onclick="filterSearch()">Gender</label>
                     </div>
                     <div class="checkbox">
-                      <label><input type="checkbox" name="hate" value="LGBTQ" onclick="filterHate()">LGBTQ</label>
+                      <label><input type="checkbox" name="hate" value="LGBTQ" onclick="filterSearch()">LGBTQ</label>
                     </div>
                     <div class="checkbox">
-                      <label><input type="checkbox" name="hate" value="religion" onclick="filterHate()">Religion</label>
+                      <label><input type="checkbox" name="hate" value="religion" onclick="filterSearch()">Religion</label>
                     </div>
                     <div class="checkbox">
-                      <label><input type="checkbox" name="hate" value="disability" onclick="filterHate()">Disability</label>
+                      <label><input type="checkbox" name="hate" value="disability" onclick="filterSearch()">Disability</label>
                     </div>
                     <div class="checkbox">
-                      <label><input type="checkbox" name="hate" value="immigration status" onclick="filterHate()">Immigration Status</label>
+                      <label><input type="checkbox" name="hate" value="immigration status" onclick="filterSearch()">Immigration Status</label>
                     </div>
                     <div class="checkbox">
-                      <label><input type="checkbox" name="hate" value="violence" onclick="filterHate()">Violence</label>
+                      <label><input type="checkbox" name="hate" value="violence" onclick="filterSearch()">Violence</label>
                     </div>
                     <div class="checkbox">
-                      <label><input type="checkbox" name="hate" value="hate speech" onclick="filterHate()">Hate Speech</label>
+                      <label><input type="checkbox" name="hate" value="hate speech" onclick="filterSearch()">Hate Speech</label>
                     </div>
                   </div>
                 </div>
@@ -213,6 +213,13 @@
                 </div>
               </div>
             </div> 
+            <div class="panel-group">
+              <table id="searchHistory" class="table-striped">
+                <tr>
+                <th>Prior searches:</th>
+                </tr>
+              </table>
+            </div>
           </div> <!-- /filter panel -->
 
           <div class="col-md-9" id="right-bar">
@@ -253,6 +260,7 @@
 
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     
+    <script type="text/javascript" src="store.min.js"></script>
     <!-- for some reason this is taking forever to load -->
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAryX0V3iDidh5L_Wg7UiykXGnifaotXL0&callback=initMap&libraries=places,visualization" async defer></script>
   </body>

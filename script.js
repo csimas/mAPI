@@ -81,52 +81,56 @@ function initMap() {
 function performSearch() {
 	var search = $( "#search" ).val();
 
-	if ($('input:radio[name=type]:checked').val() != null) {
-		console.log('here');
+	store.set('user',search);
+	initStore(); 
 
-		var request = {
-			bounds: map.getBounds(),
-			keyword: search,
-			type: $('input:radio[name=type]:checked').val()
-		};
-		service.radarSearch(request, callback);
-	} else {
-		var types = ['restaurant','bar','store','bank','local_government_office'];
-		for (t in types) {
+	if ($('input:checkbox[name=type]:checked').length > 0) {
+		$('input:checkbox[name=type]:checked').each(function() {
 			var request = {
 				bounds: map.getBounds(),
 				keyword: search,
-				type: types[t]
+				type: $(this).val()
 			};
+			console.log(request.type);
 			service.radarSearch(request, callback);
-		}
+		});
 	}
+	else {
+		// var types = document.getElementsByName("type");
+		// console.log(types);
+		// var types = ['restaurant','bar','store','bank','local_government_office'];
+		// for (t in types) {
+		// 	console.log(types[t]["value"]);
+		// 	var request = {
+		// 		bounds: map.getBounds(),
+		// 		keyword: search,
+		// 		type: types[t]["value"]
+		// 	};
+		// 	service.radarSearch(request, callback);
+		// }
+		var request = {
+			bounds: map.getBounds(),
+			keyword: search
+		};
+		service.radarSearch(request, callback);
+	}
+}
 
+function initStore() {
+    if (!store.enabled) {
+        alert('Local storage is not supported by your browser. Please disable "Private Mode", or upgrade to a modern browser.');
+        return;
+    }
+	store.forEach(function(key, val) {
+    	$("#searchHistory").append("<tr><td>"+val+"</td></tr>");
+	});
 }
 
 function filterSearch() {
 	deleteMarkers();
-	var search = $( "#search" ).val();
 	$("#results td").empty();
-	$('input:checkbox[name=type]:checked').each(function() {
-		var request = {
-			bounds: map.getBounds(),
-			keyword: search,
-			type: $(this).val()
-			// $('input:checkbox[name=hate]:checked').map(function(_, el) {
-			//   	return $(el).val();
-			//   }).get()
-		};
-		console.log(request.type);
-		service.radarSearch(request, callback);
-	});
 
-
-
-}
-
-function filterHate() {
-	// TODO
+	performSearch();
 }
 
 var actuals;
@@ -204,6 +208,7 @@ function addMarkerRed(place) {
 	  }
 	});
 
+	markers.push(marker);
 
 	google.maps.event.addListener(marker, 'click', function() {
 	  service.getDetails(place, function(result, status) {
@@ -228,6 +233,8 @@ function addMarkerGreen(place) {
 		}
 	});
 
+	markers.push(marker);
+
 	google.maps.event.addListener(marker, 'click', function() {
 		service.getDetails(place, function(result, status) {
 			if (status !== google.maps.places.PlacesServiceStatus.OK) {
@@ -240,12 +247,12 @@ function addMarkerGreen(place) {
 	});
 }
 
-function deleteMarkers() {
-	setMapOnAll(null);
-	markers = [];
-}
 function setMapOnAll(map) {
 	for (var i = 0; i < markers.length; i++) {
 		markers[i].setMap(map);
 	}
+}
+function deleteMarkers() {
+	setMapOnAll(null);
+	markers = [];
 }
