@@ -8,15 +8,13 @@
 		<script type="text/javascript" src="PorterStemmer1980.min.js"></script>
 		<script type="text/javascript" src="script.js"></script>
 		<script type="text/javascript" src="dictionary.js"></script>
-		<link href = "//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" rel = "stylesheet">
-
+		<link href = "http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel = "stylesheet">
 	</head>
 
 <body>
 	<div class="container">
 		<div class="row">
-			<br>
-			<div class="col-md-12" >
+			<div class="col-md-12 search-bar" >
 			<div class="input-group" >
 				<input id="search" type="text" class="form-control" placeholder="Search"/>
 				<div class="input-group-btn" >
@@ -26,10 +24,38 @@
 			</div>
 		</div>
 	</div>
-	<div id="right"></div>
-	<div id="left"></div>
-	<ul id="results"></ul>
-	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDEX1sxzyiqbHL7Iow5ogHWN4EODg4IwfI&callback=initMap&libraries=places,visualization" async defer></script>
+	<div class="container">
+		<div class="row">
+			<div class="col-md-3" id="filters">
+				<div class="form-group">
+					<label>Business Type</label>
+				</div>
+				<div class="radio">
+					<label><input type="radio" name="type" value="restaurant" onclick="filterSearch()">Restaurant</label>
+				</div>
+				<div class="radio">
+					<label><input type="radio" name="type" value="bar" onclick="filterSearch()">Bar</label>
+				</div>
+				<div class="radio">
+					<label><input type="radio" name="type" value="store" onclick="filterSearch()">Store</label>
+				</div>
+				<div class="radio">
+					<label><input type="radio" name="type" value="bank" onclick="filterSearch()">Bank</label>
+				</div>
+
+			</div>
+			<table class="col-md-5 table-striped" id="results">
+				<tr>
+				<th>Results</th>
+				</tr>
+			</table>
+			<div class="col-md-4" id="right">
+
+			</div>
+		</div>
+	</div>
+
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB-1rvJ0IZDsc3px7JLvD1sDFegdEGoBR8&callback=initMap&libraries=places,visualization" async defer></script>
 
 
   </body>

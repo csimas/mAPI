@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../favicon.ico">
+
+    <title>HateSpotting</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS styles for this page -->
+    <link type="text/css" rel="stylesheet" href="styles.css"/>
+
+    <!-- Font Awesome icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+  </head>
+
+  <body>
+
+    <!-- Static navbar -->
+    <nav class="navbar navbar-default navbar-static-top">
+      <div class="container">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#">HateSpotting</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+
+
+    <div class="container">
+
+      <!-- search bar container -->
+      <div class="jumbotron">
+        <p>Finding, confirming, and responding to incidents of hate</p>
+        <div class="input-group input-group-lg">
+          <span class="input-group-addon" >
+            <i class="fa fa-search"></i>
+          </span>
+          <input id="search" type="text" class="form-control" placeholder="Change location..." aria-describedby="search" >
+          <span class="input-group-btn">
+            <button class="btn btn-info" type="button" onclick="performSearch()">Go!</button>
+          </span>
+        </div>
+      </div>
+
+      <!-- three panels for content -->
+      <div class="container">
+        <div class="row">
+          <div class="col-md-3" id="filters">
+            <div class="form-group">
+              <label>Business Type</label>
+            </div>
+            <div class="radio">
+              <label><input type="radio" name="type" value="restaurant" onclick="filterSearch()">Restaurant</label>
+            </div>
+            <div class="radio">
+              <label><input type="radio" name="type" value="bar" onclick="filterSearch()">Bar</label>
+            </div>
+            <div class="radio">
+              <label><input type="radio" name="type" value="store" onclick="filterSearch()">Store</label>
+            </div>
+            <div class="radio">
+              <label><input type="radio" name="type" value="bank" onclick="filterSearch()">Bank</label>
+            </div>
+
+          </div>
+          <table class="col-md-5 table-striped" id="results">
+            <tr>
+            <th>Results of potential hate incidents:</th>
+            </tr>
+          </table>
+          <div class="col-md-4" id="right">
+
+          </div>
+        </div>
+      </div>
+
+
+    </div> <!-- /container -->
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
+    <!-- from https://github.com/kristopolous/Porter-Stemmer -->
+    <script type="text/javascript" src="PorterStemmer1980.min.js"></script>
+    <script type="text/javascript" src="script.js"></script>
+
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    
+    <!-- for some reason this is taking forever to load -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB-1rvJ0IZDsc3px7JLvD1sDFegdEGoBR8&callback=initMap&libraries=places,visualization" async defer></script>
+  </body>
+</html>

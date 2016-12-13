@@ -57,7 +57,19 @@ function performSearch() {
 	};
 	service.radarSearch(request, callback);
 }
+
+function filterSearch() {
+	var search = $( "#search" ).val();
+	var request = {
+		bounds: map.getBounds(),
+		keyword: search,
+		type: $('input:radio[name=type]:checked').val()
+	};
+	console.log(request.type);
+	service.radarSearch(request, callback);
+}
 var actuals;
+var count;
 
 function callback(results, status) {
 	if (status !== google.maps.places.PlacesServiceStatus.OK) {
@@ -65,24 +77,31 @@ function callback(results, status) {
 	  return;
 	}
 	for (var i = 0, result; result = results[i]; i++) {
-
-
 	 // 	var service = new google.maps.places.PlacesService(map);
-
+		count = 0;
         service.getDetails({
           placeId: result.place_id
         }, function(place, status) {
           if (status === google.maps.places.PlacesServiceStatus.OK) {
               	if(place.reviews != null){  //checks to see if place has review
-              		document.getElementById('results').innerHTML+=
-		              		'<div><strong>' + place.name + '</strong><br>' + 'Place ID: ' + place.place_id + '<br>' + place.formatted_address + '</div>'; //dumby text
-	              	for(var j =0,review;review=place.reviews[j];j++){
-	              		if(review.text.search("catcall")>-1){ //checks for strings (here just checking for placeholder searchstr 'rooms')
-	              			document.getElementById('results').innerHTML+=
-		              		'<div>' + place.reviews[j].text + '</div>'; //dumby text
+
+              		// document.getElementById('results').innerHTML+=
+		              // 		'<div><strong>' + place.name + '</strong><br>' + 'Place ID: ' + place.place_id + '<br>' + place.formatted_address + '</div>'; //dumby text
+	              	for(var j=0,review;review=place.reviews[j];j++){
+
+	              		if(review.text.search("rude")>-1){ //checks for strings (here just checking for placeholder searchstr 'rude')
+	              			// document.getElementById('results').innerHTML+=
+		              		// '<div>' + place.reviews[j].text + '</div>'; //dumby text
+							count++;
 	              		}
+
 	              	}
-	            }	
+	              	if (count > 0) {
+						var res = "<strong>"+place.name+"</strong>"+"<br>"+place.formatted_address;
+						var count_badge = "<span class='badge'>"+count+"</span>";
+						$("#results").append("<tr><td>"+res+count_badge+"</td></tr>");
+					}
+	            }
 		              	
           }
           
@@ -90,16 +109,21 @@ function callback(results, status) {
 
 
         //
-	  	addMarker(result);
+		if (count == 0) {
+			addMarkerGreen(result);
+		} else {
+			addMarkerRed(result);
+		}
+
 	}
 }
 
-function addMarker(place) {
+function addMarkerRed(place) {
 	var marker = new google.maps.Marker({
 	  map: map,
 	  position: place.geometry.location,
 	  icon: {
-	    url: 'https://developers.google.com/maps/documentation/javascript/images/circle.png',
+	    url: 'https://maps.google.com/mapfiles/ms/icons/red-dot.png',
 	    anchor: new google.maps.Point(10, 10),
 	    scaledSize: new google.maps.Size(10, 17)
 	  }
@@ -114,5 +138,28 @@ function addMarker(place) {
 	    infoWindow.setContent(result.name);
 	    infoWindow.open(map, marker);
 	  });
+	});
+}
+
+function addMarkerGreen(place) {
+	var marker = new google.maps.Marker({
+		map: map,
+		position: place.geometry.location,
+		icon: {
+			url: 'https://maps.google.com/mapfiles/ms/icons/green-dot.png',
+			anchor: new google.maps.Point(10, 10),
+			scaledSize: new google.maps.Size(10, 17)
+		}
+	});
+
+	google.maps.event.addListener(marker, 'click', function() {
+		service.getDetails(place, function(result, status) {
+			if (status !== google.maps.places.PlacesServiceStatus.OK) {
+				console.error(status);
+				return;
+			}
+			infoWindow.setContent(result.name);
+			infoWindow.open(map, marker);
+		});
 	});
 }

@@ -1,40 +1,33 @@
+body {
+  min-height: 2000px;
+}
 
-#left{
-	font-family: Arial;
-	color:lightgrey;
-	font-size: 16px;
-	text-align:center;
+.navbar-static-top {
+  margin-bottom: 19px;
+}
+
+.search-bar {
+	margin: 15px;
+}
+
+#filters{
 	height:600px;
-	width:200px;
-	margin:5px;
-	background-color:grey;
-	float:left;
-
 }
 #right{
 	font-family: Arial;
-	margin:5px;
-	color:lightgrey;
 	font-size: 16px;
 	text-align:center;
 	height:600px;
-	width:400px;
-	background-color:grey;
-	float:right;
+
 
 }
 #results{
-	font-family: Arial;
-	color:lightgrey;
-	font-size: 16px;
-	text-align:center;
-	height:600px;
-	width:750px;
-	margin:5px;
-	background-color:grey;
-	float:top;
-	float:left;
+
 }
+.badge {
+	float: right;
+}
+
 .result{
 	font-family: Arial;
 	color:white;
