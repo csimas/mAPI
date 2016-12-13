@@ -56,6 +56,7 @@ function containsHateGeneral(review) {
 var map;
 var infoWindow;
 var service;
+var markers = [];
 var latitude=40.730
 var longitude=-74.006
 
@@ -72,25 +73,45 @@ function initMap() {
 	});
 	infoWindow = new google.maps.InfoWindow();
 	service = new google.maps.places.PlacesService(map);
-	map.addListener('idle', performSearch);
+	//map.addListener('idle', performSearch);
 }
 
 function performSearch() {
 	var search = $( "#search" ).val();
-	var request = {
-		  bounds: map.getBounds(),
-		  keyword: search
-	};
-	service.radarSearch(request, callback);
+
+	if ($('input:radio[name=type]:checked').val() != null) {
+		console.log('here');
+
+		var request = {
+			bounds: map.getBounds(),
+			keyword: search,
+			type: $('input:radio[name=type]:checked').val()
+		};
+		service.radarSearch(request, callback);
+	} else {
+		var types = ['restaurant','bar','store','bank','local_government_office'];
+		for (t in types) {
+			var request = {
+				bounds: map.getBounds(),
+				keyword: search,
+				type: types[t]
+			};
+			service.radarSearch(request, callback);
+		}
+	}
+
 }
 
 function filterSearch() {
+	deleteMarkers();
 	var search = $( "#search" ).val();
+	$("#results td").empty();
 	var request = {
 		bounds: map.getBounds(),
 		keyword: search,
 		type: $('input:radio[name=type]:checked').val()
 	};
+
 	console.log(request.type);
 	service.radarSearch(request, callback);
 }
@@ -130,13 +151,14 @@ function callback(results, status) {
 						var res = "<strong>"+place.name+"</strong>"+"<br>"+place.formatted_address;
 						var count_badge = "<span class='badge'>"+count+"</span>";
 						$("#results").append("<tr><td>"+res+count_badge+"</td></tr>");
+
 					}
 	            }     	
           	}
         });
 
 
-        //
+        //all green
 		if (count == 0) {
 			addMarkerGreen(result);
 		} else {
@@ -156,6 +178,7 @@ function addMarkerRed(place) {
 	    scaledSize: new google.maps.Size(10, 17)
 	  }
 	});
+	markers.push(marker);
 
 	google.maps.event.addListener(marker, 'click', function() {
 	  service.getDetails(place, function(result, status) {
@@ -179,6 +202,7 @@ function addMarkerGreen(place) {
 			scaledSize: new google.maps.Size(10, 17)
 		}
 	});
+	markers.push(marker);
 
 	google.maps.event.addListener(marker, 'click', function() {
 		service.getDetails(place, function(result, status) {
@@ -190,4 +214,14 @@ function addMarkerGreen(place) {
 			infoWindow.open(map, marker);
 		});
 	});
+}
+
+function deleteMarkers() {
+	setMapOnAll(null);
+	markers = [];
+}
+function setMapOnAll(map) {
+	for (var i = 0; i < markers.length; i++) {
+		markers[i].setMap(map);
+	}
 }
