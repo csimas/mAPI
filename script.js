@@ -81,7 +81,7 @@ function initMap() {
 function performSearch() {
 	var search = $( "#search" ).val();
 	store.set('user',search)
-	init() 
+	initStore() 
 
 	var filters = $('input:checkbox[name=type]:checked').map(function(_, el) {return $(el).val();}).get();
 
@@ -117,7 +117,7 @@ function performSearch() {
 	}
 }
 
-function init() {
+function initStore() {
     if (!store.enabled) {
         alert('Local storage is not supported by your browser. Please disable "Private Mode", or upgrade to a modern browser.')
         return
