@@ -1,5 +1,0 @@
-hit
-punch
-kick
-grab
-throw
