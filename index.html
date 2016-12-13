@@ -27,14 +27,27 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-md-3" id="filters">
+				<div class="form-group">
+					<label>Business Type</label>
+				</div>
+				<div class="radio">
+					<label><input type="radio" name="type" value="restaurant" onclick="filterSearch()">Restaurant</label>
+				</div>
+				<div class="radio">
+					<label><input type="radio" name="type" value="bar" onclick="filterSearch()">Bar</label>
+				</div>
+				<div class="radio">
+					<label><input type="radio" name="type" value="store" onclick="filterSearch()">Store</label>
+				</div>
+				<div class="radio">
+					<label><input type="radio" name="type" value="bank" onclick="filterSearch()">Bank</label>
+				</div>
 
 			</div>
 			<table class="col-md-5 table-striped" id="results">
 				<tr>
 				<th>Results</th>
 				</tr>
-
-
 			</table>
 			<div class="col-md-4" id="right">
 
