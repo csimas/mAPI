@@ -5,22 +5,48 @@ document.addEventListener("DOMContentLoaded", init, false);
 
 function dictionaryInit() {
 	document.dictionary = dictionary_json;
-	console.log(document.dictionary["race"]);
+	// console.log(document.dictionary["race"]);
 	// console.log($.inArray("camel", document.dictionary["race"]));
-
 	// console.log(stemmer("prejudice"));
 
-	if(containsHate("Everyone needs to stop using the word 'Oriental'.", "race")) {
+	if(containsHateSpecific("Everyone needs to stop using the word 'Oriental'.", "race")) {
 		console.log("test true");
+	}
+
+	if(containsHateGeneral("'Pride and Prejudice'.")) {
+		console.log("general true");
 	}
 }
 
-function containsHate(review, filter) {
+function containsHateSpecific(review, filter) {
 	var review_arr = review.replace(/[\u2000-\u206F\u2E00-\u2E7F\\'!"#$%&()*+,\-.\/:;<=>?@\[\]^_`{|}~]/g, "").toLowerCase().split(" ");
-	console.log(review_arr);
+	var stem_arr = [];
+	for (var i in review_arr) {
+		stem_arr.push(stemmer(review_arr[i]));
+	}
+	// console.log(review_arr);
+	// console.log(stem_arr);
 	for (var i in document.dictionary[filter]){
-		if(review_arr.indexOf(document.dictionary[filter][i]) > -1) {
+		if(review_arr.indexOf(document.dictionary[filter][i]) > -1 || stem_arr.indexOf(document.dictionary[filter][i]) > -1) {
 			return true;
+		}
+	}
+	return false;
+}
+
+function containsHateGeneral(review) {
+	var review_arr = review.replace(/[\u2000-\u206F\u2E00-\u2E7F\\'!"#$%&()*+,\-.\/:;<=>?@\[\]^_`{|}~]/g, "").toLowerCase().split(" ");
+	var stem_arr = [];
+	for (var i in review_arr) {
+		stem_arr.push(stemmer(review_arr[i]));
+	}
+	// console.log(review_arr);
+	// console.log(stem_arr);
+	for (var filter in document.dictionary) {
+		for (var i in document.dictionary[filter]){
+			if(review_arr.indexOf(document.dictionary[filter][i]) > -1 || stem_arr.indexOf(document.dictionary[filter][i]) > -1) {
+				return true;
+			}
 		}
 	}
 	return false;
@@ -68,6 +94,11 @@ function filterSearch() {
 	console.log(request.type);
 	service.radarSearch(request, callback);
 }
+
+function filterHate() {
+	// TODO
+}
+
 var actuals;
 var count;
 
@@ -82,29 +113,26 @@ function callback(results, status) {
         service.getDetails({
           placeId: result.place_id
         }, function(place, status) {
-          if (status === google.maps.places.PlacesServiceStatus.OK) {
+          	if (status === google.maps.places.PlacesServiceStatus.OK) {
               	if(place.reviews != null){  //checks to see if place has review
 
               		// document.getElementById('results').innerHTML+=
 		              // 		'<div><strong>' + place.name + '</strong><br>' + 'Place ID: ' + place.place_id + '<br>' + place.formatted_address + '</div>'; //dumby text
-	              	for(var j=0,review;review=place.reviews[j];j++){
+	              	for (var j = 0, review; review = place.reviews[j]; j++){
 
 	              		if(review.text.search("rude")>-1){ //checks for strings (here just checking for placeholder searchstr 'rude')
 	              			// document.getElementById('results').innerHTML+=
 		              		// '<div>' + place.reviews[j].text + '</div>'; //dumby text
 							count++;
 	              		}
-
 	              	}
 	              	if (count > 0) {
 						var res = "<strong>"+place.name+"</strong>"+"<br>"+place.formatted_address;
 						var count_badge = "<span class='badge'>"+count+"</span>";
 						$("#results").append("<tr><td>"+res+count_badge+"</td></tr>");
 					}
-	            }
-		              	
-          }
-          
+	            }     	
+          	}
         });
 
 

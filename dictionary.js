@@ -154,7 +154,8 @@ var dictionary_json = {
 	"hate speech": [
 		"discrimin",
 		"harass",
+		"hate crime",
 		"prejudic",
-		"hate crime"
+		"rude"
 	]
 };
