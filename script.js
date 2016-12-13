@@ -80,20 +80,19 @@ function initMap() {
 
 function performSearch() {
 	var search = $( "#search" ).val();
-	var filters = $('input:checkbox[name=type]:checked').map(function(_, el) {return $(el).val();}).get();
 
-	if (filters.length > 0) {
-		console.log('here');
-		for(var i in filters) {
+	if ($('input:checkbox[name=type]:checked').length > 0) {
+		$('input:checkbox[name=type]:checked').each(function() {
 			var request = {
 				bounds: map.getBounds(),
 				keyword: search,
-				type: filters[i]
+				type: $(this).val()
 			};
+			console.log(request.type);
 			service.radarSearch(request, callback);
-		}
-
-	} else {
+		});
+	}
+	else {
 		// var types = document.getElementsByName("type");
 		// console.log(types);
 		// var types = ['restaurant','bar','store','bank','local_government_office'];
@@ -116,27 +115,9 @@ function performSearch() {
 
 function filterSearch() {
 	deleteMarkers();
-	var search = $( "#search" ).val();
 	$("#results td").empty();
-	$('input:checkbox[name=type]:checked').each(function() {
-		var request = {
-			bounds: map.getBounds(),
-			keyword: search,
-			type: $(this).val()
-			// $('input:checkbox[name=hate]:checked').map(function(_, el) {
-			//   	return $(el).val();
-			//   }).get()
-		};
-		console.log(request.type);
-		service.radarSearch(request, callback);
-	});
 
-
-
-}
-
-function filterHate() {
-	// TODO
+	performSearch();
 }
 
 var actuals;
@@ -214,6 +195,7 @@ function addMarkerRed(place) {
 	  }
 	});
 
+	markers.push(marker);
 
 	google.maps.event.addListener(marker, 'click', function() {
 	  service.getDetails(place, function(result, status) {
@@ -238,6 +220,8 @@ function addMarkerGreen(place) {
 		}
 	});
 
+	markers.push(marker);
+
 	google.maps.event.addListener(marker, 'click', function() {
 		service.getDetails(place, function(result, status) {
 			if (status !== google.maps.places.PlacesServiceStatus.OK) {
@@ -250,12 +234,12 @@ function addMarkerGreen(place) {
 	});
 }
 
-function deleteMarkers() {
-	setMapOnAll(null);
-	markers = [];
-}
 function setMapOnAll(map) {
 	for (var i = 0; i < markers.length; i++) {
 		markers[i].setMap(map);
 	}
+}
+function deleteMarkers() {
+	setMapOnAll(null);
+	markers = [];
 }
