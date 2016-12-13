@@ -110,6 +110,9 @@ function filterSearch() {
 		bounds: map.getBounds(),
 		keyword: search,
 		type: $('input:checkbox[name=type]:checked').val()
+		// $('input:checkbox[name=hate]:checked').map(function(_, el) {
+  //   	return $(el).val();
+  //   }).get()
 	};
 
 	console.log(request.type);
@@ -128,6 +131,7 @@ function callback(results, status) {
 	  console.error(status);
 	  return;
 	}
+	var hate_filters = [];
 	for (var i = 0, result; result = results[i]; i++) {
 	 // 	var service = new google.maps.places.PlacesService(map);
 		count = 0;
@@ -140,6 +144,15 @@ function callback(results, status) {
               		// document.getElementById('results').innerHTML+=
 		              // 		'<div><strong>' + place.name + '</strong><br>' + 'Place ID: ' + place.place_id + '<br>' + place.formatted_address + '</div>'; //dumby text
 	              	for (var j = 0, review; review = place.reviews[j]; j++){
+	              		// console.log(review.text);
+	              		// if($('input:checkbox[name=hate]:checked').val() == null) {
+	              		// 	if (containsHateGeneral(review.text)) {
+	              		// 		console.log(review.text);
+	              		// 	}
+	              		// }
+	              		// else {
+	              		// 	if (containsHateSpecific(review.text, $('input:checkbox[name=hate]:checked').val())) {}
+	              		// }
 
 	              		if(review.text.search("rude")>-1){ //checks for strings (here just checking for placeholder searchstr 'rude')
 	              			// document.getElementById('results').innerHTML+=
@@ -161,9 +174,12 @@ function callback(results, status) {
 				}
           	}
         });
-
-
 	}
+	// if ($('input:checkbox[name=hate]:checked').val() == null) {
+	console.log($('input:checkbox[name=hate]:checked').map(function(_, el) {
+    	return $(el).val();
+    }).get())
+	// }
 }
 
 function addMarkerRed(place) {
@@ -173,7 +189,7 @@ function addMarkerRed(place) {
 	  icon: {
 	    url: 'https://maps.google.com/mapfiles/ms/icons/red-dot.png',
 	    anchor: new google.maps.Point(10, 10),
-	    scaledSize: new google.maps.Size(10, 17)
+	    scaledSize: new google.maps.Size(17, 17)
 	  }
 	});
 
@@ -197,7 +213,7 @@ function addMarkerGreen(place) {
 		icon: {
 			url: 'https://maps.google.com/mapfiles/ms/icons/green-dot.png',
 			anchor: new google.maps.Point(10, 10),
-			scaledSize: new google.maps.Size(10, 17)
+			scaledSize: new google.maps.Size(17, 17)
 		}
 	});
 
