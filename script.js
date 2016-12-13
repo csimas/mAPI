@@ -80,6 +80,8 @@ function initMap() {
 
 function performSearch() {
 	var search = $( "#search" ).val();
+	deleteMarkers();
+	$("#results tr").empty();
 
 	store.set('user',search);
 	initStore(); 
@@ -128,7 +130,7 @@ function initStore() {
 
 function filterSearch() {
 	deleteMarkers();
-	$("#results td").empty();
+	$("#results tr").empty();
 
 	performSearch();
 }
