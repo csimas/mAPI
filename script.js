@@ -81,6 +81,9 @@ function initMap() {
 function performSearch() {
 	var search = $( "#search" ).val();
 
+	store.set('user',search);
+	initStore(); 
+
 	if ($('input:checkbox[name=type]:checked').length > 0) {
 		$('input:checkbox[name=type]:checked').each(function() {
 			var request = {
@@ -111,6 +114,16 @@ function performSearch() {
 		};
 		service.radarSearch(request, callback);
 	}
+}
+
+function initStore() {
+    if (!store.enabled) {
+        alert('Local storage is not supported by your browser. Please disable "Private Mode", or upgrade to a modern browser.');
+        return;
+    }
+	store.forEach(function(key, val) {
+    	$("#searchHistory").append("<tr><td>"+val+"</td></tr>");
+	});
 }
 
 function filterSearch() {

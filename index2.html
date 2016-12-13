@@ -213,6 +213,13 @@
                 </div>
               </div>
             </div> 
+            <div class="panel-group">
+              <table id="searchHistory" class="table-striped">
+                <tr>
+                <th>Prior searches:</th>
+                </tr>
+              </table>
+            </div>
           </div> <!-- /filter panel -->
 
           <div class="col-md-9" id="right-bar">
@@ -222,12 +229,9 @@
             </div>
             
             <div class="row">
-              <h3>Potential Hate Incidents</h3>
+              <h3>Potential Hate Incidents:</h3>
               <div class="col-md-9">
                 <table id="results" class="table-striped">
-                  <tr>
-                  <th>Results of potential hate incidents:</th>
-                  </tr>
                 </table>
               </div>
             </div>
@@ -252,6 +256,7 @@
 
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     
+    <script src="store.min.js"></script>
     <!-- for some reason this is taking forever to load -->
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAryX0V3iDidh5L_Wg7UiykXGnifaotXL0&callback=initMap&libraries=places,visualization" async defer></script>
   </body>
