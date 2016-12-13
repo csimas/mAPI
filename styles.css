@@ -35,18 +35,12 @@ body {
 #results{
 
 }
+
 .badge {
 	float: right;
 }
 
-.result{
-	font-family: Arial;
-	color:white;
-	font-size: 16px;
-	text-align:center;
-	height:80px;
-	width:700px;
-	margin:5px;
-	background-color:grey;
-	float:top;
+#table-styling {
+	padding-left:10px;
+	padding-right:30px;
 }
