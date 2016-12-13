@@ -153,17 +153,15 @@ function callback(results, status) {
 						$("#results").append("<tr><td>"+res+count_badge+"</td></tr>");
 
 					}
-	            }     	
+	            }
+				if (count == 0) {
+					addMarkerGreen(place);
+				} else {
+					addMarkerRed(place);
+				}
           	}
         });
 
-
-        //all green
-		if (count == 0) {
-			addMarkerGreen(result);
-		} else {
-			addMarkerRed(result);
-		}
 
 	}
 }
@@ -178,7 +176,7 @@ function addMarkerRed(place) {
 	    scaledSize: new google.maps.Size(10, 17)
 	  }
 	});
-	markers.push(marker);
+
 
 	google.maps.event.addListener(marker, 'click', function() {
 	  service.getDetails(place, function(result, status) {
@@ -202,7 +200,6 @@ function addMarkerGreen(place) {
 			scaledSize: new google.maps.Size(10, 17)
 		}
 	});
-	markers.push(marker);
 
 	google.maps.event.addListener(marker, 'click', function() {
 		service.getDetails(place, function(result, status) {
