@@ -1,26 +1,17 @@
+.search-bar {
+	margin: 15px;
+}
 
 #left{
 	font-family: Arial;
 	color:lightgrey;
-	font-size: 16px;
 	text-align:center;
-	height:600px;
-	width:200px;
-	margin:5px;
-	background-color:grey;
-	float:left;
-
 }
 #right{
 	font-family: Arial;
-	margin:5px;
-	color:lightgrey;
 	font-size: 16px;
 	text-align:center;
 	height:600px;
-	width:400px;
-	background-color:grey;
-	float:right;
 
 }
 #results{
