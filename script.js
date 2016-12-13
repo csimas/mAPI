@@ -222,7 +222,7 @@ function performSearch() {
 	service.radarSearch(request, callback);
 }
 
-function filterSearch() { //not currently working
+function filterSearch() {
 	var search = $( "#search" ).val();
 	var request = {
 		bounds: map.getBounds(),
@@ -233,6 +233,7 @@ function filterSearch() { //not currently working
 	service.radarSearch(request, callback);
 }
 var actuals;
+var count;
 
 function callback(results, status) {
 	if (status !== google.maps.places.PlacesServiceStatus.OK) {
@@ -240,10 +241,8 @@ function callback(results, status) {
 	  return;
 	}
 	for (var i = 0, result; result = results[i]; i++) {
-
-
 	 // 	var service = new google.maps.places.PlacesService(map);
-		var count = 0;
+		count = 0;
         service.getDetails({
           placeId: result.place_id
         }, function(place, status) {
@@ -265,16 +264,15 @@ function callback(results, status) {
 						var res = "<strong>"+place.name+"</strong>"+"<br>"+place.formatted_address;
 						var count_badge = "<span class='badge'>"+count+"</span>";
 						$("#results").append("<tr><td>"+res+count_badge+"</td></tr>");
-						addMarkerRed(result);
 					}
-	            }	
+	            }
 		              	
           }
           
         });
 
 
-        //for some reason rn they're all green?
+        //
 		if (count == 0) {
 			addMarkerGreen(result);
 		} else {
