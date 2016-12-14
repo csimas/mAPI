@@ -4,6 +4,8 @@ var dictionary_json = {
 		"apu",
 		"beaner",
 		"bigot",
+		"black man",
+		"black person",
 		"black people",
 		"brownie",
 		"camel",
@@ -115,10 +117,13 @@ var dictionary_json = {
 	"disability":[
 		"blind",
 		"deaf",
+		"disabl",
+		"disability",
 		"dwarf",
 		"handicap",
 		"handicapped",
 		"midget",
+		"mental",
 		"mongol",
 		"mongoloid",
 		"retard",
@@ -146,12 +151,19 @@ var dictionary_json = {
 	],
 
 	"violence": [
+		"abus",
 		"attack",
-		"grab",
+		"gang",
 		"hit",
 		"punch",
+		"scream",
+		"spat",
+		"spit",
+		"stab",
+		"suicide",
 		"kick",
-		"throw"
+		"throw",
+		"yell"
 	],
 
 	"hate speech": [
