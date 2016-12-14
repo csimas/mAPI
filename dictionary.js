@@ -57,6 +57,7 @@ var dictionary_json = {
 		"racism",
 		"racist",
 		"redskin",
+		"skin color",
 		"spic",
 		"spick",
 		"spig",
