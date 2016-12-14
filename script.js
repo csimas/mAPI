@@ -173,7 +173,7 @@ function callback(results, status) {
 		              // 		'<div><strong>' + place.name + '</strong><br>' + 'Place ID: ' + place.place_id + '<br>' + place.formatted_address + '</div>'; //dumby text
 	              	for (var j = 0, review; review = place.reviews[j]; j++){
 	              		// console.log(review.text);
-	              		var tags = [];
+	              		
 	              		var words = [];
 	              		if (hate_filters.length == 0) {
 	              			// console.log("in if");
@@ -224,7 +224,7 @@ function callback(results, status) {
 	              	if (count > 0) {
 						var res = "<strong>"+place.name+"</strong>"+"<br>"+place.formatted_address;
 						var count_badge = "<span class='badge'>"+count+"</span>";
-
+						var tags =
 						$("#results").append("<tr onclick=\"showReview(this);\" data-internalid="+place.id+" data-toggle=\"modal\" href=\"#reviews\"><td>"+res+count_badge+"</td></tr>");
 					}
 	            }
