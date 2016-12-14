@@ -186,7 +186,7 @@ function callback(results, status) {
 	              					"place_address": place.formatted_address,
 	              					"place_phone": place.formatted_phone_number,
 	              					"tags": tags,
-	              					"words": words
+	              					"keywords": words
 	              				};
 	              				reviews[place.id].push(review_details);
 	              				count++;
@@ -206,7 +206,7 @@ function callback(results, status) {
 		              					"place_address": place.formatted_address,
 		              					"place_phone": place.formatted_phone_number,
 		              					"tags": tags,
-		              					"words": words
+		              					"keywords": words
 		              				}
 		              				reviews[place.id].push(review_details);
 	              					count++;
