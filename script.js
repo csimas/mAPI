@@ -26,13 +26,14 @@ function containsHateSpecific(review, filter) {
 	}
 	// console.log(review_arr);
 	// console.log(stem_arr);
+	var found = false;
 	for (var i in document.dictionary[filter]){
 		if(review_arr.indexOf(document.dictionary[filter][i]) > -1 || stem_arr.indexOf(document.dictionary[filter][i]) > -1) {
 			console.log(document.dictionary[filter][i]);
-			return true;
+			found = true;
 		}
 	}
-	return false;
+	return found;
 }
 
 function containsHateGeneral(review) {
@@ -54,6 +55,7 @@ function containsHateGeneral(review) {
 			}
 		}
 	}
+	console.log(tags);
 	return found;
 }
 
