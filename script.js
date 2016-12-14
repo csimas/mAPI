@@ -43,15 +43,18 @@ function containsHateGeneral(review) {
 	}
 	// console.log(review_arr);
 	// console.log(stem_arr);
+	var tags = [];
+	var found = false;
 	for (var filter in document.dictionary) {
 		for (var i in document.dictionary[filter]){
 			if(review_arr.indexOf(document.dictionary[filter][i]) > -1 || stem_arr.indexOf(document.dictionary[filter][i]) > -1) {
 				console.log(document.dictionary[filter][i]);
-				return true;
+				tags.push(document.dictionary[filter][i]);
+				found = true;
 			}
 		}
 	}
-	return false;
+	return found;
 }
 
 //adapted from https://developers.google.com/maps/documentation/javascript/examples/place-radar-search
@@ -171,7 +174,7 @@ function callback(results, status) {
 	              					"place_name": place.name,
 	              					"place_address": place.formatted_address,
 	              					"place_phone": place.formatted_phone_number
-	              				}
+	              				};
 	              				reviews[place.id].push(review_details);
 	              				count++;
 	              				console.log(count);
