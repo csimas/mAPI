@@ -166,7 +166,7 @@ function callback(results, status) {
         }, function(place, status) {
           	if (status === google.maps.places.PlacesServiceStatus.OK) {
                 var count = 0;
-                var tags = [];
+                var place_tags = [];
               	if(place.reviews != null){  //checks to see if place has review
 
               		reviews[place.id] = [];
@@ -174,7 +174,7 @@ function callback(results, status) {
 		              // 		'<div><strong>' + place.name + '</strong><br>' + 'Place ID: ' + place.place_id + '<br>' + place.formatted_address + '</div>'; //dumby text
 	              	for (var j = 0, review; review = place.reviews[j]; j++){
 	              		// console.log(review.text);
-	              		
+	              		var tags = [];
 	              		var words = [];
 	              		if (hate_filters.length == 0) {
 	              			// console.log("in if");
@@ -190,6 +190,11 @@ function callback(results, status) {
 	              					"keywords": words
 	              				};
 	              				reviews[place.id].push(review_details);
+	              				for(var i in tags) {
+	              					if (place_tags.indexOf(tags[i]) === -1) {
+	              						place_tags.push(tags[i]);
+	              					}
+	              				}
 	              				count++;
 	              				console.log(count);
 	              			}
@@ -210,6 +215,11 @@ function callback(results, status) {
 		              					"keywords": words
 		              				}
 		              				reviews[place.id].push(review_details);
+	              					for(var i in tags) {
+		              					if (place_tags.indexOf(tags[i]) === -1) {
+		              						place_tags.push(tags[i]);
+		              					}
+		              				}
 	              					count++;
 	              					console.log(count);
 	              				}
@@ -219,8 +229,16 @@ function callback(results, status) {
 	              	if (count > 0) {
 						var res = "<strong>"+place.name+"</strong>"+"<br>"+place.formatted_address;
 						var count_badge = "<span class='badge'>"+count+"</span>";
-						//var tag_string = 
-						$("#results").append("<tr onclick=\"showReview(this);\" data-internalid="+place.id+" data-toggle=\"modal\" href=\"#reviews\"><td>"+res+count_badge+"</td></tr>");
+						var tag_string = "tags: ";
+						for (var i in place_tags) {
+							if(i < place_tags.length-1) {
+								tag_string = tag_string + place_tags[i] + ", ";
+							}
+							else {
+								tag_string = tag_string + place_tags[i];
+							}
+						}
+						$("#results").append("<tr onclick=\"showReview(this);\" data-internalid="+place.id+" data-toggle=\"modal\" href=\"#reviews\"><td>"+res+"<br><small>"+tag_string+"</small>"+count_badge+"</td></tr>");
 					}
 	            }
 				if (count == 0) {
@@ -240,7 +258,25 @@ function showReview(event) {
 	$("#review-phone").text(review_arr[0]["place_phone"]);
 	$("#review-table tr").empty();
 	for (var i in review_arr) {
-		$("#review-table").append("<tr><td>"+review_arr[i]["text"]+"<br> &mdash;"+review_arr[i]["author"]+" </td></tr>");
+		var tag_string = "tags: ";
+		for (var j in review_arr[i]["tags"]) {
+			if(i < review_arr[i]["tags"].length-1) {
+				tag_string = tag_string + review_arr[i]["tags"][j] + ", ";
+			}
+			else {
+				tag_string = tag_string + review_arr[i]["tags"][j];
+			}
+		}
+		var keyword_string = "keywords: ";
+		for (var j in review_arr[i]["keywords"]) {
+			if(i < review_arr[i]["keywords"].length-1) {
+				keyword_string = keyword_string + review_arr[i]["keywords"][j] + ", ";
+			}
+			else {
+				keyword_string = keyword_string + review_arr[i]["keywords"][j];
+			}
+		}
+		$("#review-table").append("<tr><td>"+review_arr[i]["text"]+"<br> &mdash;"+review_arr[i]["author"]+"<br><small>"+keyword_string+"<br>"+tag_string+"</small>"+"</td></tr>");
 	}
 }
 
