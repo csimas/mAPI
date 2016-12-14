@@ -60,6 +60,7 @@ var dictionary_json = {
 		"spig",
 		"spigotty",
 		"tacohead",
+		"terror",
 		"uncle tom",
 		"welfare",
 		"white trash"

@@ -9,47 +9,54 @@ function dictionaryInit() {
 	// console.log($.inArray("camel", document.dictionary["race"]));
 	// console.log(stemmer("prejudice"));
 
-	if(containsHateSpecific("Everyone needs to stop using the word 'Oriental'.", "race")) {
-		console.log("test true");
-	}
+	// if(containsHateSpecific("Everyone needs to stop using the word 'Oriental'.", "race")) {
+	// 	console.log("test true");
+	// }
 
-	if(containsHateGeneral("'Pride and Prejudice'.")) {
-		console.log("general true");
-	}
+	// if(containsHateGeneral("'Pride and Prejudice'.")) {
+	// 	console.log("general true");
+	// }
 }
 
-function containsHateSpecific(review, filter) {
+function containsHateSpecific(review, filter, tags, words) {
 	var review_arr = review.replace(/[\u2000-\u206F\u2E00-\u2E7F\\'!"#$%&()*+,\-.\/:;<=>?@\[\]^_`{|}~]/g, "").toLowerCase().split(" ");
 	var stem_arr = [];
 	for (var i in review_arr) {
 		stem_arr.push(stemmer(review_arr[i]));
 	}
-	// console.log(review_arr);
-	// console.log(stem_arr);
+	var found = false;
 	for (var i in document.dictionary[filter]){
 		if(review_arr.indexOf(document.dictionary[filter][i]) > -1 || stem_arr.indexOf(document.dictionary[filter][i]) > -1) {
 			console.log(document.dictionary[filter][i]);
-			return true;
+			if(tags.indexOf(filter) === -1) {
+				tags.push(filter);
+			}
+			if(words.indexOf(document.dictionary[filter][i]) === -1) {
+				words.push(document.dictionary[filter][i]);
+			}
+			found = true;
 		}
 	}
-	return false;
+	return found;
 }
 
-function containsHateGeneral(review) {
+function containsHateGeneral(review, tags, words) {
 	var review_arr = review.replace(/[\u2000-\u206F\u2E00-\u2E7F\\'!"#$%&()*+,\-.\/:;<=>?@\[\]^_`{|}~]/g, "").toLowerCase().split(" ");
 	var stem_arr = [];
 	for (var i in review_arr) {
 		stem_arr.push(stemmer(review_arr[i]));
 	}
-	// console.log(review_arr);
-	// console.log(stem_arr);
-	var tags = [];
 	var found = false;
 	for (var filter in document.dictionary) {
 		for (var i in document.dictionary[filter]){
 			if(review_arr.indexOf(document.dictionary[filter][i]) > -1 || stem_arr.indexOf(document.dictionary[filter][i]) > -1) {
 				console.log(document.dictionary[filter][i]);
-				tags.push(document.dictionary[filter][i]);
+				if(tags.indexOf(filter) === -1) {
+					tags.push(filter);
+				}
+				if(words.indexOf(document.dictionary[filter][i]) === -1) {
+					words.push(document.dictionary[filter][i]);
+				}
 				found = true;
 			}
 		}
@@ -68,7 +75,7 @@ var longitude=-74.006
 function initMap() {
 	map = new google.maps.Map(document.getElementById('map'), {
 		  center: {lat: latitude, lng: longitude},
-		  zoom: 13,
+		  zoom: 10,
 		  styles: [{
 			    stylers: [{ visibility: 'simplified' }]
 		  }, {
@@ -81,14 +88,16 @@ function initMap() {
 	//map.addListener('idle', performSearch);
 }
 
-function performSearch() {
+function performSearch(flag=true) {
 	var search = $( "#search" ).val();
 	deleteMarkers();
 	$("#results tr").empty();
-
-	store.set('user',search);
-	initStore(); 
-
+	
+	if(flag){
+		store.set('user',search);
+		initStore(); 
+	}
+	
 	if ($('input:checkbox[name=type]:checked').length > 0) {
 		$('input:checkbox[name=type]:checked').each(function() {
 			var request = {
@@ -135,7 +144,7 @@ function filterSearch() {
 	deleteMarkers();
 	$("#results tr").empty();
 
-	performSearch();
+	performSearch(false);
 }
 
 var actuals;
@@ -164,16 +173,20 @@ function callback(results, status) {
 		              // 		'<div><strong>' + place.name + '</strong><br>' + 'Place ID: ' + place.place_id + '<br>' + place.formatted_address + '</div>'; //dumby text
 	              	for (var j = 0, review; review = place.reviews[j]; j++){
 	              		// console.log(review.text);
+	              		var tags = [];
+	              		var words = [];
 	              		if (hate_filters.length == 0) {
 	              			// console.log("in if");
-	              			if (containsHateGeneral(review.text)) {
+	              			if (containsHateGeneral(review.text, tags, words)) {
 	              				console.log(review.text);
 	              				var review_details = {
 	              					"text": review.text,
 	              					"author": review.author_name,
 	              					"place_name": place.name,
 	              					"place_address": place.formatted_address,
-	              					"place_phone": place.formatted_phone_number
+	              					"place_phone": place.formatted_phone_number,
+	              					"tags": tags,
+	              					"keywords": words
 	              				};
 	              				reviews[place.id].push(review_details);
 	              				count++;
@@ -183,7 +196,7 @@ function callback(results, status) {
 	              		else {
 	              			// console.log("in else");
 	              			for (var i in hate_filters) {
-	              				if (containsHateSpecific(review.text, hate_filters[i])) {
+	              				if (containsHateSpecific(review.text, hate_filters[i], tags, words)) {
 	              					console.log(hate_filters[i]);
 	              					console.log(review.text);
 	              					var review_details = {
@@ -191,7 +204,9 @@ function callback(results, status) {
 		              					"author": review.author_name,
 		              					"place_name": place.name,
 		              					"place_address": place.formatted_address,
-		              					"place_phone": place.formatted_phone_number
+		              					"place_phone": place.formatted_phone_number,
+		              					"tags": tags,
+		              					"keywords": words
 		              				}
 		              				reviews[place.id].push(review_details);
 	              					count++;
@@ -214,9 +229,9 @@ function callback(results, status) {
 					}
 	            }
 				if (count == 0) {
-					addMarkerGreen(place);
+					addMarkerGreen(place, count);
 				} else {
-					addMarkerRed(place);
+					addMarkerRed(place, count);
 				}
           	}
         });
@@ -234,14 +249,14 @@ function showReview(event) {
 	}
 }
 
-function addMarkerRed(place) {
+function addMarkerRed(place, count) {
 	var marker = new google.maps.Marker({
 	  map: map,
 	  position: place.geometry.location,
 	  icon: {
 	    url: 'https://maps.google.com/mapfiles/ms/icons/red-dot.png',
 	    anchor: new google.maps.Point(10, 10),
-	    scaledSize: new google.maps.Size(17, 17)
+	    scaledSize: new google.maps.Size(17+count, 17+count)
 	  }
 	});
 
@@ -259,14 +274,14 @@ function addMarkerRed(place) {
 	});
 }
 
-function addMarkerGreen(place) {
+function addMarkerGreen(place, count) {
 	var marker = new google.maps.Marker({
 		map: map,
 		position: place.geometry.location,
 		icon: {
 			url: 'https://maps.google.com/mapfiles/ms/icons/green-dot.png',
 			anchor: new google.maps.Point(10, 10),
-			scaledSize: new google.maps.Size(17, 17)
+			scaledSize: new google.maps.Size(17+count, 17+count)
 		}
 	});
 
