@@ -215,17 +215,11 @@ function callback(results, status) {
 	              				}
 	              			}
 	              		}
-
-	      //         		if(review.text.search("rude")>-1){ //checks for strings (here just checking for placeholder searchstr 'rude')
-	      //         			// document.getElementById('results').innerHTML+=
-		     //          		// '<div>' + place.reviews[j].text + '</div>'; //dumby text
-							// count++;
-	      //         		}
 	              	}
 	              	if (count > 0) {
 						var res = "<strong>"+place.name+"</strong>"+"<br>"+place.formatted_address;
 						var count_badge = "<span class='badge'>"+count+"</span>";
-						var tags =
+						//var tag_string = 
 						$("#results").append("<tr onclick=\"showReview(this);\" data-internalid="+place.id+" data-toggle=\"modal\" href=\"#reviews\"><td>"+res+count_badge+"</td></tr>");
 					}
 	            }
