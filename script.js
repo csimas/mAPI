@@ -136,7 +136,8 @@ function filterSearch() {
 }
 
 var actuals;
-var count;
+
+var reviews = {};
 
 function callback(results, status) {
 	if (status !== google.maps.places.PlacesServiceStatus.OK) {
@@ -147,13 +148,15 @@ function callback(results, status) {
 	// console.log(hate_filters);
 	for (var i = 0, result; result = results[i]; i++) {
 	 // 	var service = new google.maps.places.PlacesService(map);
-		count = 0;
+		
         service.getDetails({
           placeId: result.place_id
         }, function(place, status) {
           	if (status === google.maps.places.PlacesServiceStatus.OK) {
+                var count = 0;
               	if(place.reviews != null){  //checks to see if place has review
 
+              		reviews[place.id] = [];
               		// document.getElementById('results').innerHTML+=
 		              // 		'<div><strong>' + place.name + '</strong><br>' + 'Place ID: ' + place.place_id + '<br>' + place.formatted_address + '</div>'; //dumby text
 	              	for (var j = 0, review; review = place.reviews[j]; j++){
@@ -162,7 +165,16 @@ function callback(results, status) {
 	              			// console.log("in if");
 	              			if (containsHateGeneral(review.text)) {
 	              				console.log(review.text);
+	              				var review_details = {
+	              					"text": review.text,
+	              					"author": review.author_name,
+	              					"place_name": place.name,
+	              					"place_address": place.formatted_address,
+	              					"place_phone": place.formatted_phone_number
+	              				}
+	              				reviews[place.id].push(review_details);
 	              				count++;
+	              				console.log(count);
 	              			}
 	              		}
 	              		else {
@@ -171,7 +183,16 @@ function callback(results, status) {
 	              				if (containsHateSpecific(review.text, hate_filters[i])) {
 	              					console.log(hate_filters[i]);
 	              					console.log(review.text);
+	              					var review_details = {
+		              					"text": review.text,
+		              					"author": review.author_name,
+		              					"place_name": place.name,
+		              					"place_address": place.formatted_address,
+		              					"place_phone": place.formatted_phone_number
+		              				}
+		              				reviews[place.id].push(review_details);
 	              					count++;
+	              					console.log(count);
 	              				}
 	              			}
 	              		}
@@ -185,7 +206,7 @@ function callback(results, status) {
 	              	if (count > 0) {
 						var res = "<strong>"+place.name+"</strong>"+"<br>"+place.formatted_address;
 						var count_badge = "<span class='badge'>"+count+"</span>";
-						$("#results").append("<tr onclick=\"input\" data-toggle=\"modal\" href=\"#reviews\"><td>"+res+count_badge+"</td></tr>");
+						$("#results").append("<tr onclick=\"showReview(this);\" data-internalid="+place.id+" data-toggle=\"modal\" href=\"#reviews\"><td>"+res+count_badge+"</td></tr>");
 
 					}
 	            }
@@ -196,6 +217,13 @@ function callback(results, status) {
 				}
           	}
         });
+	}
+}
+
+function showReview(event) {
+	var review_arr = reviews[event.dataset.internalid];
+	for (var i in review_arr) {
+		$("#review-body").text(review_arr[i]["text"]);
 	}
 }
 
