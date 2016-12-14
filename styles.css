@@ -1,7 +1,13 @@
+html {
+  position: relative;
+  min-height: 100%;
+}
+
 body {
   min-height: 1000px;
   padding-left: 0;
   padding-right: 0;
+  margin-bottom:60px;
 }
 
 .navbar-static-top {
@@ -45,5 +51,19 @@ body {
 	padding-right:30px;
 }
 #searchHistory{
-	width:150px;
+
+}
+
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  /* Set the fixed height of the footer here */
+  height: 60px;
+  background-color: #f5f5f5;
+}
+
+.container .text-muted {
+  padding: 0 15px;
+  margin: 20px 0;
 }

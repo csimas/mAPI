@@ -225,8 +225,12 @@ function callback(results, status) {
 
 function showReview(event) {
 	var review_arr = reviews[event.dataset.internalid];
+	$("#review-title").text(review_arr[0]["place_name"]);
+	$("#review-address").text(review_arr[0]["place_address"]);
+	$("#review-phone").text(review_arr[0]["place_phone"]);
+	$("#review-table tr").empty();
 	for (var i in review_arr) {
-		$("#review-body").text(review_arr[i]["text"]);
+		$("#review-table").append("<tr><td>"+review_arr[i]["text"]+"<br> &mdash;"+review_arr[i]["author"]+" </td></tr>");
 	}
 }
 
