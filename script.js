@@ -166,6 +166,7 @@ function callback(results, status) {
         }, function(place, status) {
           	if (status === google.maps.places.PlacesServiceStatus.OK) {
                 var count = 0;
+                var tags = [];
               	if(place.reviews != null){  //checks to see if place has review
 
               		reviews[place.id] = [];
