@@ -19,7 +19,8 @@ function dictionaryInit() {
 }
 
 function containsHateSpecific(review, filter, tags, words) {
-	var review_arr = review.replace(/[\u2000-\u206F\u2E00-\u2E7F\\'!"#$%&()*+,\-.\/:;<=>?@\[\]^_`{|}~]/g, "").toLowerCase().split(" ");
+	var review_unedited = review[0].split(" ");
+	var review_arr = review[0].replace(/[\u2000-\u206F\u2E00-\u2E7F\\'!"#$%&()*+,\-.\/:;<=>?@\[\]^_`{|}~]/g, "").toLowerCase().split(" ");
 	var stem_arr = [];
 	for (var i in review_arr) {
 		stem_arr.push(stemmer(review_arr[i]));
@@ -28,12 +29,17 @@ function containsHateSpecific(review, filter, tags, words) {
 	for (var i in document.dictionary[filter]){
 		if(review_arr.indexOf(document.dictionary[filter][i]) > -1 || stem_arr.indexOf(document.dictionary[filter][i]) > -1) {
 			console.log(document.dictionary[filter][i]);
+			var ri = review_arr.indexOf(document.dictionary[filter][i]) > -1 ? review_arr.indexOf(document.dictionary[filter][i]) : stem_arr.indexOf(document.dictionary[filter][i]);
+			review_unedited[ri] = "<mark>" + review_unedited[ri] + "</mark>";
+			// console.log(review_unedited[ri]);
 			if(tags.indexOf(filter) === -1) {
 				tags.push(filter);
 			}
 			if(words.indexOf(document.dictionary[filter][i]) === -1) {
 				words.push(document.dictionary[filter][i]);
 			}
+			review[0] = review_unedited.join(" ");
+			console.log(review);
 			found = true;
 		}
 	}
@@ -41,7 +47,8 @@ function containsHateSpecific(review, filter, tags, words) {
 }
 
 function containsHateGeneral(review, tags, words) {
-	var review_arr = review.replace(/[\u2000-\u206F\u2E00-\u2E7F\\'!"#$%&()*+,\-.\/:;<=>?@\[\]^_`{|}~]/g, "").toLowerCase().split(" ");
+	var review_unedited = review[0].split(" ");
+	var review_arr = review[0].replace(/[\u2000-\u206F\u2E00-\u2E7F\\'!"#$%&()*+,\-.\/:;<=>?@\[\]^_`{|}~]/g, "").toLowerCase().split(" ");
 	var stem_arr = [];
 	for (var i in review_arr) {
 		stem_arr.push(stemmer(review_arr[i]));
@@ -51,16 +58,22 @@ function containsHateGeneral(review, tags, words) {
 		for (var i in document.dictionary[filter]){
 			if(review_arr.indexOf(document.dictionary[filter][i]) > -1 || stem_arr.indexOf(document.dictionary[filter][i]) > -1) {
 				console.log(document.dictionary[filter][i]);
+				var ri = review_arr.indexOf(document.dictionary[filter][i]) > -1 ? review_arr.indexOf(document.dictionary[filter][i]) : stem_arr.indexOf(document.dictionary[filter][i]);
+				review_unedited[ri] = "<mark>" + review_unedited[ri] + "</mark>";
+				// console.log(review_unedited[ri]);
 				if(tags.indexOf(filter) === -1) {
 					tags.push(filter);
 				}
 				if(words.indexOf(document.dictionary[filter][i]) === -1) {
 					words.push(document.dictionary[filter][i]);
 				}
+				review[0] = review_unedited.join(" ");
+				console.log(review);
 				found = true;
 			}
 		}
 	}
+	
 	return found;
 }
 
@@ -176,12 +189,14 @@ function callback(results, status) {
 	              		// console.log(review.text);
 	              		var tags = [];
 	              		var words = [];
+	              		var review_string = [];
+	              		review_string.push(review.text);
 	              		if (hate_filters.length == 0) {
 	              			// console.log("in if");
-	              			if (containsHateGeneral(review.text, tags, words)) {
-	              				console.log(review.text);
+	              			if (containsHateGeneral(review_string, tags, words)) {
+	              				console.log(review_string);
 	              				var review_details = {
-	              					"text": review.text,
+	              					"text": review_string[0],
 	              					"author": review.author_name,
 	              					"place_name": place.name,
 	              					"place_address": place.formatted_address,
@@ -202,11 +217,11 @@ function callback(results, status) {
 	              		else {
 	              			// console.log("in else");
 	              			for (var i in hate_filters) {
-	              				if (containsHateSpecific(review.text, hate_filters[i], tags, words)) {
+	              				if (containsHateSpecific(review_string, hate_filters[i], tags, words)) {
 	              					console.log(hate_filters[i]);
-	              					console.log(review.text);
+	              					console.log(review_string);
 	              					var review_details = {
-		              					"text": review.text,
+		              					"text": review_string[0],
 		              					"author": review.author_name,
 		              					"place_name": place.name,
 		              					"place_address": place.formatted_address,
