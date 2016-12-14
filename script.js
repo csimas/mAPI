@@ -81,14 +81,16 @@ function initMap() {
 	//map.addListener('idle', performSearch);
 }
 
-function performSearch() {
+function performSearch(flag=True) {
 	var search = $( "#search" ).val();
 	deleteMarkers();
 	$("#results tr").empty();
-
-	store.set('user',search);
-	initStore(); 
-
+	
+	if(flag){
+		store.set('user',search);
+		initStore(); 
+	}
+	
 	if ($('input:checkbox[name=type]:checked').length > 0) {
 		$('input:checkbox[name=type]:checked').each(function() {
 			var request = {
@@ -135,7 +137,7 @@ function filterSearch() {
 	deleteMarkers();
 	$("#results tr").empty();
 
-	performSearch();
+	performSearch(False);
 }
 
 var actuals;
