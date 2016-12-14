@@ -29,9 +29,12 @@ function containsHateSpecific(review, filter, tags, words) {
 	for (var i in document.dictionary[filter]){
 		if(review_arr.indexOf(document.dictionary[filter][i]) > -1 || stem_arr.indexOf(document.dictionary[filter][i]) > -1) {
 			console.log(document.dictionary[filter][i]);
-			var ri = review_arr.indexOf(document.dictionary[filter][i]) > -1 ? review_arr.indexOf(document.dictionary[filter][i]) : stem_arr.indexOf(document.dictionary[filter][i]);
-			review_unedited[ri] = "<mark>" + review_unedited[ri] + "</mark>";
-			// console.log(review_unedited[ri]);
+			for(var j in stem_arr) {
+				if(stem_arr[j] == document.dictionary[filter][i]) {
+					review_unedited[j] = "<mark>" + review_unedited[j] + "</mark>";
+					console.log(review_unedited[j]);
+				}
+			}
 			if(tags.indexOf(filter) === -1) {
 				tags.push(filter);
 			}
@@ -58,9 +61,12 @@ function containsHateGeneral(review, tags, words) {
 		for (var i in document.dictionary[filter]){
 			if(review_arr.indexOf(document.dictionary[filter][i]) > -1 || stem_arr.indexOf(document.dictionary[filter][i]) > -1) {
 				console.log(document.dictionary[filter][i]);
-				var ri = review_arr.indexOf(document.dictionary[filter][i]) > -1 ? review_arr.indexOf(document.dictionary[filter][i]) : stem_arr.indexOf(document.dictionary[filter][i]);
-				review_unedited[ri] = "<mark>" + review_unedited[ri] + "</mark>";
-				// console.log(review_unedited[ri]);
+				for(var j in stem_arr) {
+					if(stem_arr[j] == document.dictionary[filter][i]) {
+						review_unedited[j] = "<mark>" + review_unedited[j] + "</mark>";
+						console.log(review_unedited[j]);
+					}
+				}
 				if(tags.indexOf(filter) === -1) {
 					tags.push(filter);
 				}
