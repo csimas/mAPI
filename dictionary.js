@@ -153,6 +153,7 @@ var dictionary_json = {
 
 	"violence": [
 		"abus",
+		"assault",
 		"attack",
 		"gang",
 		"hit",
