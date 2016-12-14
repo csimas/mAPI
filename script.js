@@ -185,7 +185,7 @@ function callback(results, status) {
 	              	if (count > 0) {
 						var res = "<strong>"+place.name+"</strong>"+"<br>"+place.formatted_address;
 						var count_badge = "<span class='badge'>"+count+"</span>";
-						$("#results").append("<tr onclick=\"input\" data-toggle=\"modal\" href=\"#reviews\"><td>"+res+count_badge+"</td></tr>");
+						$("#results").append("<tr id=\"click\"><td>"+res+count_badge+"</td></tr>");
 
 					}
 	            }
@@ -198,24 +198,6 @@ function callback(results, status) {
         });
 	}
 }
-
-$(function() {
-
-$('#clickMe').click(function(event) {
-    var mytext = $('#myText').val();
-
-    $('<div id="dialog">'+mytext+'</div>').appendTo('body');        
-    event.preventDefault();
-
-        $("#dialog").dialog({                   
-            width: 600,
-            modal: true,
-            close: function(event, ui) {
-                $("#dialog").hide();
-                }
-            });
-    }); //close click
-});
 
 function addMarkerRed(place) {
 	var marker = new google.maps.Marker({
