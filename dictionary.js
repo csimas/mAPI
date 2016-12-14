@@ -4,6 +4,7 @@ var dictionary_json = {
 		"apu",
 		"beaner",
 		"bigot",
+		"black people",
 		"brownie",
 		"camel",
 		"charlie",
@@ -149,7 +150,6 @@ var dictionary_json = {
 		"hit",
 		"punch",
 		"kick",
-		"grab",
 		"throw"
 	],
 
