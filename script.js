@@ -43,15 +43,18 @@ function containsHateGeneral(review) {
 	}
 	// console.log(review_arr);
 	// console.log(stem_arr);
+	var tags = [];
+	var found = false;
 	for (var filter in document.dictionary) {
 		for (var i in document.dictionary[filter]){
 			if(review_arr.indexOf(document.dictionary[filter][i]) > -1 || stem_arr.indexOf(document.dictionary[filter][i]) > -1) {
 				console.log(document.dictionary[filter][i]);
-				return true;
+				tags.push(document.dictionary[filter][i]);
+				found = true;
 			}
 		}
 	}
-	return false;
+	return found;
 }
 
 //adapted from https://developers.google.com/maps/documentation/javascript/examples/place-radar-search
@@ -124,7 +127,7 @@ function initStore() {
         return;
     }
 	store.forEach(function(key, val) {
-    	$("#searchHistory").append("<tr><td>"+val+"</td></tr>");
+    	$("#searchHistory").prepend("<tr><td>"+val+"</td></tr>");
 	});
 }
 
@@ -136,7 +139,8 @@ function filterSearch() {
 }
 
 var actuals;
-var count;
+
+var reviews = {};
 
 function callback(results, status) {
 	if (status !== google.maps.places.PlacesServiceStatus.OK) {
@@ -147,13 +151,15 @@ function callback(results, status) {
 	// console.log(hate_filters);
 	for (var i = 0, result; result = results[i]; i++) {
 	 // 	var service = new google.maps.places.PlacesService(map);
-		count = 0;
+		
         service.getDetails({
           placeId: result.place_id
         }, function(place, status) {
           	if (status === google.maps.places.PlacesServiceStatus.OK) {
+                var count = 0;
               	if(place.reviews != null){  //checks to see if place has review
 
+              		reviews[place.id] = [];
               		// document.getElementById('results').innerHTML+=
 		              // 		'<div><strong>' + place.name + '</strong><br>' + 'Place ID: ' + place.place_id + '<br>' + place.formatted_address + '</div>'; //dumby text
 	              	for (var j = 0, review; review = place.reviews[j]; j++){
@@ -162,7 +168,16 @@ function callback(results, status) {
 	              			// console.log("in if");
 	              			if (containsHateGeneral(review.text)) {
 	              				console.log(review.text);
+	              				var review_details = {
+	              					"text": review.text,
+	              					"author": review.author_name,
+	              					"place_name": place.name,
+	              					"place_address": place.formatted_address,
+	              					"place_phone": place.formatted_phone_number
+	              				};
+	              				reviews[place.id].push(review_details);
 	              				count++;
+	              				console.log(count);
 	              			}
 	              		}
 	              		else {
@@ -171,7 +186,16 @@ function callback(results, status) {
 	              				if (containsHateSpecific(review.text, hate_filters[i])) {
 	              					console.log(hate_filters[i]);
 	              					console.log(review.text);
+	              					var review_details = {
+		              					"text": review.text,
+		              					"author": review.author_name,
+		              					"place_name": place.name,
+		              					"place_address": place.formatted_address,
+		              					"place_phone": place.formatted_phone_number
+		              				}
+		              				reviews[place.id].push(review_details);
 	              					count++;
+	              					console.log(count);
 	              				}
 	              			}
 	              		}
@@ -185,8 +209,8 @@ function callback(results, status) {
 	              	if (count > 0) {
 						var res = "<strong>"+place.name+"</strong>"+"<br>"+place.formatted_address;
 						var count_badge = "<span class='badge'>"+count+"</span>";
-						$("#results").append("<tr id=\"click\"><td>"+res+count_badge+"</td></tr>");
 
+						$("#results").append("<tr onclick=\"showReview(this);\" data-internalid="+place.id+" data-toggle=\"modal\" href=\"#reviews\"><td>"+res+count_badge+"</td></tr>");
 					}
 	            }
 				if (count == 0) {
@@ -196,6 +220,13 @@ function callback(results, status) {
 				}
           	}
         });
+	}
+}
+
+function showReview(event) {
+	var review_arr = reviews[event.dataset.internalid];
+	for (var i in review_arr) {
+		$("#review-body").text(review_arr[i]["text"]);
 	}
 }
 

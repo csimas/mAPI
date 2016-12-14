@@ -146,6 +146,7 @@ var dictionary_json = {
 
 	"violence": [
 		"attack",
+		"grab",
 		"hit",
 		"punch",
 		"kick",
