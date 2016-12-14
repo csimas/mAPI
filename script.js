@@ -81,7 +81,7 @@ function initMap() {
 	//map.addListener('idle', performSearch);
 }
 
-function performSearch(flag=True) {
+function performSearch(flag=true) {
 	var search = $( "#search" ).val();
 	deleteMarkers();
 	$("#results tr").empty();
@@ -137,7 +137,7 @@ function filterSearch() {
 	deleteMarkers();
 	$("#results tr").empty();
 
-	performSearch(False);
+	performSearch(false);
 }
 
 var actuals;
