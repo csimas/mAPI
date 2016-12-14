@@ -135,7 +135,7 @@ var dictionary_json = {
 		"fob",
 		"get out",
 		"illegals",
-		"immigra",
+		"immigr",
 		"speak english",
 		"no english",
 		"mick",
