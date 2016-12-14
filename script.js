@@ -260,7 +260,7 @@ function showReview(event) {
 	for (var i in review_arr) {
 		var tag_string = "tags: ";
 		for (var j in review_arr[i]["tags"]) {
-			if(i < review_arr[i]["tags"].length-1) {
+			if(j < review_arr[i]["tags"].length-1) {
 				tag_string = tag_string + review_arr[i]["tags"][j] + ", ";
 			}
 			else {
@@ -269,7 +269,7 @@ function showReview(event) {
 		}
 		var keyword_string = "keywords: ";
 		for (var j in review_arr[i]["keywords"]) {
-			if(i < review_arr[i]["keywords"].length-1) {
+			if(j < review_arr[i]["keywords"].length-1) {
 				keyword_string = keyword_string + review_arr[i]["keywords"][j] + ", ";
 			}
 			else {
@@ -287,7 +287,7 @@ function addMarkerRed(place, count) {
 	  icon: {
 	    url: 'https://maps.google.com/mapfiles/ms/icons/red-dot.png',
 	    anchor: new google.maps.Point(10, 10),
-	    scaledSize: new google.maps.Size(17+count, 17+count)
+	    scaledSize: new google.maps.Size(17+(10*count), 17+(10*count))
 	  }
 	});
 
