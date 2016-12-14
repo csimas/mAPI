@@ -124,7 +124,7 @@ function initStore() {
         return;
     }
 	store.forEach(function(key, val) {
-    	$("#searchHistory").append("<tr><td>"+val+"</td></tr>");
+    	$("#searchHistory").prepend("<tr><td>"+val+"</td></tr>");
 	});
 }
 
