@@ -107,6 +107,12 @@ function initMap() {
 	//map.addListener('idle', performSearch);
 }
 
+function handle(e) {
+    if(e.keyCode === 13) {
+      performSearch();
+    }
+}
+
 function performSearch(flag=true) {
 	var search = $( "#search" ).val();
 	deleteMarkers();

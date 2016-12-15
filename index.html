@@ -46,9 +46,9 @@
           <span class="input-group-addon" >
             <i class="fa fa-search"></i>
           </span>
-          <input id="search" type="text" class="form-control" placeholder="Search..." aria-describedby="search">
+          <input id="search" type="text" class="form-control" placeholder="Search..." onkeydown="handle(event)" aria-describedby="search">
           <span class="input-group-btn">
-            <button class="btn btn-info" type="button" onclick="performSearch()">Go!</button>
+            <button class="btn btn-info" type="submit" onclick="performSearch()">Go!</button>
           </span>
         </div>
       </div>
